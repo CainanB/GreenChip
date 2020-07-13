@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="icon" 
+          type="image/ico"
+          href="images/favicon.ico">
     <!-- NEED API URL KEY ARRAY FROM SLACK TO USE API CALLS TO POPULATE DATA CHART AND GRAPHS! -->
     <title>Dashboard</title>
     <!-- Required meta tags -->
@@ -13,9 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik&family=Varela+Round&display=swap" rel="stylesheet">
     <script src="https://use.fontawesome.com/fd3bcad7e6.js"></script>
 
-   
+  
+    <script type="module" src="./js/backFireBase.js"></script>
 
-    
 
   </head>
   <body>
@@ -53,19 +56,20 @@
               <div class="col-2 d-flex justify-content-end pr-0">
                 <img src="images/greenchip.png" class="mb-5 mt-5 gcsmall" alt="greenchip" width="60" height="50">
               </div>
-              <div id="totalPortfolioValue"class="col-4 rubik d-flex justify-content-start mt-5 mb-5" style="font-size: 40px;">
+              <div id="totalPortfolioValue"class="col rubik d-flex justify-content-start mt-5 mb-5 mr-3" style="font-size: 40px;" autofocus>
                   
-
               </div>
           </div>
 
           <hr>
 
           <div class="row ml-1">
+
               <div class="col-lg-2 col-sm-auto">
 
               </div>
-              <div class="col">
+
+              <div class="col" style="padding-right:15px;">
                 <table class="table table-success">
                     <thead class="table-dark">
                       <tr>
@@ -75,13 +79,13 @@
                         <th scope="col">Total</th>
                       </tr>
                     </thead>
-                    <!-- NEED API URL KEY ARRAY FROM SLACK TO USE API CALLS TO POPULATE DATA CHART AND GRAPHS! -->
                     <tbody id="tbody">
                       
                     </tbody>
                   </table>
               </div>
-              <div class="col-lg-2 col-sm-1">
+
+              <div class="col-lg-2 col-sm-auto mr-sm-1">
 
               </div>
             
@@ -93,30 +97,24 @@
             <div class="col d-flex justify-content-start">
               <button id="refreshButton" class="btn btn-outline-dark btn-lg mr-2">Refresh Data</button>
               <a href="checkout.html"><button class="btn btn-outline-success btn-lg  mr-2">Buy</button></a>
-              <button class="btn btn-outline-primary btn-lg ">Sell</button>
             </div>
             <div class="col-lg-2 col-sm-auto"></div>
           </div>
 
+          <!--start of line and pie charts-->
           <div class="row mt-5 ml-5 mr-5" style="height:60vh;">
-              <!-- <div class="col-lg-2 col-sm-auto pr-0 pl-0"></div> -->
 
-              <div class="col-lg-5 d-flex d-flex justify-content-center mt-3 pr-0 pl-0">
-                <canvas id="myChart"></canvas>
-              </div>
+            <div class="col-xl-6 mt-3 mb-5 pr-0 pl-0">
+              <canvas id="myChart"></canvas>
+            </div>
 
-              <div class="col-sm-0 col-md-0 col-lg-2"></div>
-
+            <div class="col-xl-6 mb-3 mb-5 pl-0 pr-0 mt-4">
               <canvas id="myPie"></canvas>
-                
-              </div>
+            </div>
 
-              <!-- <div class="col-lg-2 col-sm-auto pr-0 pl-0"></div> -->
           </div>
 
-
-
-          <!--modal-->
+          <!--log out modal-->
           <div class="modal fade" id="areyousure" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">

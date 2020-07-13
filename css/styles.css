@@ -34,7 +34,7 @@ li:hover{
 }
 
 #navLi:hover{
-    background-color: white;
+    background-color: #f7f7f7;
     color:blue;
 }
 
@@ -49,6 +49,12 @@ li:hover{
 
 .col{
     padding-right:0px;
+}
+
+.col-1{
+    padding-left: 0px;
+    padding-right: 0px;
+
 }
 
 .container-fluid{
@@ -156,3 +162,11 @@ body{
 #successPurchaseMessage{
     display: none;
 }
+
+canvas{
+    width:100%;
+    height:auto;
+}
+
+
+
