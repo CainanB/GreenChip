@@ -69,20 +69,15 @@ $(()=>{
                     // console.log("creating new user")
                     let newUser = new User(userID,10000,10000)
                     localStorage.setItem(`${userID}`, JSON.stringify(newUser))
-                    db.collection("users").doc(`${userID}`).set({
+                    db.collection("users").doc(userID).set({
                         info: JSON.stringify(newUser)
                     })
-                    // db.collection("users").add({
-                    //     first: "Ada",
-                    //     last: "Lovelace",
-                    //     born: 1815
-                    // })
-                    // .then(function(docRef) {
-                    //     console.log("Document written with ID: ", docRef.id);
-                    // })
-                    // .catch(function(error) {
-                    //     console.error("Error adding document: ", error);
-                    // });
+                    .then(function() {
+                        console.log("Document successfully written!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
                     
                 })
                 .catch(function(e) {
@@ -109,10 +104,12 @@ $(()=>{
             // alert("you clicked!")
             var id = $('#inputUsername')[0].value
             var password = $('#inputPassword')[0].value
-            auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            console.log(auth)
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
             .then(function() {
                 db.collection("users").doc(id).get()
                 .then(function (doc) {
+                    console.log(doc)
                     let parsedUserObj = doc.data().info
                     console.log(`Got something from DB! ${parsedUserObj}`)
                     localStorage.setItem(`${id}`, parsedUserObj)
