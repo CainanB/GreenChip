@@ -107,7 +107,7 @@ body{
 }
 
 #parallax-image{
-    background-image: url("/images/parallax.jpg");
+    background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
     height:600px;
     background-attachment: fixed;
@@ -116,7 +116,7 @@ body{
 }
 
 #parallax-image2{
-    background-image: url("/images/parallax.jpg");
+    background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
     height:400px;
     background-attachment: fixed;
@@ -124,7 +124,7 @@ body{
     background-position-y:100px;
 }
 #parallax-image3{
-    background-image: url("/images/shellSE.jpg");
+    background-image: url("../images/shellSE.jpg");
     background-size: cover;
     height:400px;
     background-attachment: fixed;
@@ -132,7 +132,7 @@ body{
 }
 
 #parallax-image4{
-    background-image: url("/images/shellSE2.jpg");
+    background-image: url("../images/shellSE2.jpg");
     background-size: cover;
     height:400px;
     background-attachment: fixed;
