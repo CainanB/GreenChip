@@ -51,6 +51,12 @@ li:hover{
     padding-right:0px;
 }
 
+.col-1{
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+
 .container-fluid{
     padding-left: 0px;
     padding-right: 0px;
