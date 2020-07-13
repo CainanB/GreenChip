@@ -66,25 +66,47 @@ $(()=>{
                     $('#exampleModal').modal('toggle')
                 })
                 .then(function () {
-                    // console.log("creating new user")
+                    console.log("creating new user")
                     let newUser = new User(userID,10000,10000)
-                    localStorage.setItem(`${userID}`, JSON.stringify(newUser))
-                    db.collection("users").doc(userID).set({
-                        info: JSON.stringify(newUser)
+                    let string = JSON.stringify(newUser)
+                    localStorage.setItem(`${userID}`, string)
+                })
+                // .then(function () {
+                //     db.collection("users").doc(userID).set({
+                //         info: `${string}`
+                //     })
+                //     .then(function() {
+                //         console.log("WE DID IT!!!")
+                //     })
+                //     .catch(function(error) {
+                //         console.log(error)
+                //     })
+                // })
+                .then(function() {
+                    console.log("Document successfully written!");
+                })
+                .catch(function(error) {
+                    $('#modalerror')[0].innerHTML = error.message
+                });
+
+                let newUser = new User(userID,10000,10000)
+                let string = JSON.stringify(newUser)
+                db.collection("users").doc(userID).set({
+                        info: `${string}`
                     })
                     .then(function() {
-                        console.log("Document successfully written!");
+                        console.log("WE DID IT!!!")
                     })
                     .catch(function(error) {
-                        console.error("Error writing document: ", error);
-                    });
-                    
-                })
-                .catch(function(e) {
-                    // console.log(e.message)
-                    $('#modalerror')[0].innerHTML = e.message
+                        console.log(error)
+                    })
+
+
+                // .catch(function(e) {
+                //     // console.log(e.message)
+                //     $('#modalerror')[0].innerHTML = e.message
                 
-                })
+                // })
             }
             else {
                 $('#modalerror')[0].innerHTML = "Passwords do not match"
@@ -119,7 +141,7 @@ $(()=>{
                     .then((cred)=>{
                         localStorage.setItem("currentUser",id);
                         console.log(cred)
-                        // window.location.href = "./dashboard.html"
+                        window.location.href = "./dashboard.html"
                 }).catch(function(e) {
                     // console.log(e.message)
                     $('#error')[0].innerHTML = e.message
