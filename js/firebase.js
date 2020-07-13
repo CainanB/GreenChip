@@ -1,5 +1,15 @@
 import {firebaseAPIkey, newsAPIkey, iexCloudAPIkey} from './apikeys.js'
 
+class User{
+    constructor(userName, cash,currentNetWorth, holdings = []){
+        this.userName = userName;
+        this.cash = cash;
+        this.currentNetWorth = currentNetWorth;
+        this.holdings = holdings;
+        this.currentStockAwaitingPurchase = {};
+    }
+}
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
 apiKey: firebaseAPIkey,
@@ -22,7 +32,6 @@ $(()=>{
 
         const auth = firebase.auth()
         const db = firebase.firestore()
-        
     
         // listen for authentication status changes
         auth.onAuthStateChanged(user => {
@@ -53,11 +62,33 @@ $(()=>{
             if ($SUpassword[0].value == $SUpasswordConfirm[0].value) {
                 auth.createUserWithEmailAndPassword(userID, userPassword)
                 .then(cred => {
-                    // console.log(cred.user)
+                    console.log(cred.user)
                     $('#exampleModal').modal('toggle')
-                }).catch(function(e) {
+                })
+                .then(function () {
+                    // console.log("creating new user")
+                    let newUser = new User(userID,10000,10000)
+                    localStorage.setItem(`${userID}`, JSON.stringify(newUser))
+                    db.collection("users").doc(`${userID}`).set({
+                        info: JSON.stringify(newUser)
+                    })
+                    // db.collection("users").add({
+                    //     first: "Ada",
+                    //     last: "Lovelace",
+                    //     born: 1815
+                    // })
+                    // .then(function(docRef) {
+                    //     console.log("Document written with ID: ", docRef.id);
+                    // })
+                    // .catch(function(error) {
+                    //     console.error("Error adding document: ", error);
+                    // });
+                    
+                })
+                .catch(function(e) {
                     // console.log(e.message)
                     $('#modalerror')[0].innerHTML = e.message
+                
                 })
             }
             else {
@@ -80,11 +111,18 @@ $(()=>{
             var password = $('#inputPassword')[0].value
             auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
             .then(function() {
+                db.collection("users").doc(id).get()
+                .then(function (doc) {
+                    let parsedUserObj = doc.data().info
+                    console.log(`Got something from DB! ${parsedUserObj}`)
+                    localStorage.setItem(`${id}`, parsedUserObj)
+                    console.log(`Here's the localStorage stuff: ${localStorage.getItem(id)}`)
+                })
                 auth.signInWithEmailAndPassword(id, password)
                     .then((cred)=>{
                         localStorage.setItem("currentUser",id);
                         console.log(cred)
-                        window.location.href = "./dashboard.html"
+                        // window.location.href = "./dashboard.html"
                 }).catch(function(e) {
                     // console.log(e.message)
                     $('#error')[0].innerHTML = e.message
