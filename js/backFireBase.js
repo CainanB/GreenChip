@@ -13,9 +13,12 @@ appId: "1:541187275911:web:e9f65bf84216f95ed28c22",
 measurementId: "G-PVE2WQ9NZJ"
 };
 // Initialize Firebase
+console.log(firebaseAPIkey)
+console.log(firebaseConfig)
+
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
+// const auth = firebase.auth();
 const db = firebase.firestore();
 firebase.analytics();
 
@@ -23,7 +26,7 @@ $(()=>{
 
         $('#transparent').hide();
 
-        const auth = firebase.auth()
+        // const auth = firebase.auth()
         const db = firebase.firestore()
 
         auth.onAuthStateChanged(user => {
@@ -37,6 +40,7 @@ $(()=>{
             }
         })
 
+        const auth = firebase.auth()
         $('#logout').click((e) =>{
             e.preventDefault();
             auth.signOut()
