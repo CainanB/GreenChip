@@ -26,7 +26,7 @@ $(()=>{
 
         $('#transparent').hide();
 
-        const auth = firebase.auth()
+        // const auth = firebase.auth()
         const db = firebase.firestore()
 
         auth.onAuthStateChanged(user => {
@@ -40,6 +40,7 @@ $(()=>{
             }
         })
 
+        const auth = firebase.auth()
         $('#logout').click((e) =>{
             e.preventDefault();
             auth.signOut()

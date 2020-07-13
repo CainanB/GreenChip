@@ -9,7 +9,6 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-
 // HOLDING CLASS TO CREATE INSTANCES WHEN STOCK IS PURCHASED
 class Holding {
     
@@ -258,7 +257,12 @@ $("#goHome").click(function(e){
     window.location.href = "dashboard.html";
 })
 
-
+const auth = firebase.auth()
+$('#logout').click((e) =>{
+    e.preventDefault();
+    auth.signOut()
+    window.location.href = "./index.html"
+})
 
 // Create line graph
 async function createLineGraph(){
