@@ -1,0 +1,39 @@
+nav{
+
+    font-size: x-large;
+}
+
+.navbar-brand{
+    font-size: x-large;
+}
+
+.richBlack{
+    background-color: #0D1B2A;
+    color:white;
+}
+
+.bdazz{
+    background-color: #415A77;
+}
+
+a{
+    color:#E0E1DD;
+}
+
+a:hover{
+    color: green;
+}
+
+.navbar-toggler{
+    width: 47px;
+    height: 34px;
+    background-color: #7eb444;
+    border:none;
+}
+.navbar-toggler-icon{
+    width: 100%;
+    float: left;
+    height:2px;
+    background-color: white;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- NEED API URL KEY ARRAY FROM SLACK TO USE API CALLS TO POPULATE DATA CHART AND GRAPHS! -->
+    <title>Dashboard</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&family=Varela+Round&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/fd3bcad7e6.js"></script>
+   
+
+   
+
+    
+    <script type="module" src="./js/backFireBase.js"></script>
+
+  </head>
+  <body>
+
+      <div class="container-fluid">
+
+        <div class="row sticky-top">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-info bg-light">
+                    <a class="navbar-brand" href="dashboard.html">Green Chip</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li id="navLi" class="nav-item ml-auto mr-auto">
+                          <a class="nav-link" href="#">About Us<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li id="navLi" class="nav-item ml-auto mr-auto ">
+                          <a class="nav-link" class="ml-auto" href="#">FAQ</a>
+                        </li>
+          
+                      </ul>
+                      <form class="form-inline my-2 my-lg-0">
+                        <button type="button" data-target="#areyousure" data-toggle="modal" class="btn btn-outline-dark my-2 ml-auto mr-auto my-sm-0">Log Out</button>
+                      </form>
+                    </div>
+                  </nav>
+            </div>
+
+        </div> <!--end nav bar-->
+
+          <div class="row">
+              <div class="col-2 d-flex justify-content-end pr-0">
+                <img src="images/greenchip.png" class="mb-5 mt-5 gcsmall" alt="greenchip" width="60" height="50">
+              </div>
+              <div id="totalPortfolioValue"class="col-4 rubik d-flex justify-content-start mt-5 mb-5" style="font-size: 40px;">
+                  
+
+              </div>
+          </div>
+
+          <hr>
+
+          <div class="row ml-1">
+              <div class="col-lg-2 col-sm-auto">
+
+              </div>
+              <div class="col">
+                <table class="table table-success">
+                    <thead class="table-dark">
+                      <tr>
+                        <th scope="col">Company (Ticker)</th>
+                        <th scope="col">Shares</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    <!-- NEED API URL KEY ARRAY FROM SLACK TO USE API CALLS TO POPULATE DATA CHART AND GRAPHS! -->
+                    <tbody id="tbody">
+                      
+                    </tbody>
+                  </table>
+              </div>
+              <div class="col-lg-2 col-sm-1">
+
+              </div>
+            
+          </div> <!--end of table row-->
+
+          <!--refresh and buy button-->
+          <div class="row mt-2 ml-1">
+            <div class="col-lg-2 col-sm-auto"></div>
+            <div class="col d-flex justify-content-start">
+              <button id="refreshButton" class="btn btn-outline-dark btn-lg mr-2">Refresh Data</button>
+              <a href="checkout.html"><button class="btn btn-outline-success btn-lg  mr-2">Buy</button></a>
+              <button class="btn btn-outline-primary btn-lg ">Sell</button>
+            </div>
+            <div class="col-lg-2 col-sm-auto"></div>
+          </div>
+
+          <div class="row mt-5 ml-5 mr-5" style="height:60vh;">
+              <!-- <div class="col-lg-2 col-sm-auto pr-0 pl-0"></div> -->
+
+              <div class="col-lg-5 d-flex d-flex justify-content-center mt-3 pr-0 pl-0">
+                <canvas id="myChart"></canvas>
+              </div>
+
+              <div class="col-sm-0 col-md-0 col-lg-2"></div>
+
+              <canvas id="myPie"></canvas>
+                
+              </div>
+
+              <!-- <div class="col-lg-2 col-sm-auto pr-0 pl-0"></div> -->
+          </div>
+
+
+
+          <!--modal-->
+          <div class="modal fade" id="areyousure" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Are you sure you want to log out?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  There's still money to be made.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Nevermind</button>
+                  <button type="button" class="btn btn-primary" id="logout">I'm sure.</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div> <!--end of container fluid-->
+      
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
+    <script type="module" src="js/script.js"></script>
+    <script src="js/testapi.js" type="module"></script>
+    <script type="module" src="js/newsAPI.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    
+
+  </body>
+</html>

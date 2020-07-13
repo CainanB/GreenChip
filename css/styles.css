@@ -1,0 +1,158 @@
+/* main styles page  */
+
+
+/*making the image responsive*/
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+#piechart{
+    width: 100%;
+    height: auto;
+    
+}
+
+#piechart > * > first-child{
+    width:auto;
+    height:auto;
+}
+
+ul{
+    list-style: none;
+
+}
+
+#line{
+    width:auto;
+    height:auto;
+}
+
+li:hover{
+    background-color: black;
+    color:white;
+}
+
+#navLi:hover{
+    background-color: white;
+    color:blue;
+}
+
+.gcsmall{
+    max-width: 100%;
+    height: 60px;
+}
+
+.row{
+    margin-right:0px;
+}
+
+.col{
+    padding-right:0px;
+}
+
+.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+    margin:0px;
+}
+
+.bdazz{
+    background-color: #415A77;
+}
+
+.shadowBlue{
+    background-color: #778DA9;
+}
+
+#signin:hover{
+    color:black;
+    border:black solid 1px;
+}
+#getStarted:hover{
+    color:black;
+    border:black solid 1px;
+}
+
+.header{
+    color: black;
+    font-size:20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+}
+
+a{
+    color:black;
+}
+
+.varela{
+    font-family: 'Varela Round', sans-serif;
+}
+
+.rubik{
+    font-family: 'Rubik', sans-serif;
+}
+
+body{
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: 'Varela Round', sans-serif;
+    /* background-color: white; */
+}
+
+.navbar-toggler{
+    border:2px solid;
+}
+
+#parallax-image{
+    background-image: url("/images/parallax.jpg");
+    background-repeat: no-repeat;
+    height:600px;
+    background-attachment: fixed;
+    background-position-x: -1000px;
+    background-position-y: -1200px;
+}
+
+#parallax-image2{
+    background-image: url("/images/parallax.jpg");
+    background-repeat: no-repeat;
+    height:400px;
+    background-attachment: fixed;
+    background-position-x: -1900px;
+    background-position-y:100px;
+}
+#parallax-image3{
+    background-image: url("/images/shellSE.jpg");
+    background-size: cover;
+    height:400px;
+    background-attachment: fixed;
+    background-position-y:-300px;
+}
+
+#parallax-image4{
+    background-image: url("/images/shellSE2.jpg");
+    background-size: cover;
+    height:400px;
+    background-attachment: fixed;
+}
+
+#indexFooter{
+    font-size: 60px;
+}
+
+/* Changes cursor on checkout page dropdown search list */
+#nameList li{
+    cursor: pointer;
+}
+#overPurchaseWarningMessage{
+    display: none;
+}
+
+#checkoutTable{
+    display: none;
+}
+#successPurchaseMessage{
+    display: none;
+}
