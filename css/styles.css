@@ -156,3 +156,6 @@ body{
 #successPurchaseMessage{
     display: none;
 }
+#overSellWarningMessage, #successSellMessage{
+    display: none;
+}

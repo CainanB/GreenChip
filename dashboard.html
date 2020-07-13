@@ -75,6 +75,7 @@
                         <th scope="col">Shares</th>
                         <th scope="col">Price</th>
                         <th scope="col">Total</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <!-- NEED API URL KEY ARRAY FROM SLACK TO USE API CALLS TO POPULATE DATA CHART AND GRAPHS! -->
@@ -95,7 +96,8 @@
             <div class="col d-flex justify-content-start">
               <button id="refreshButton" class="btn btn-outline-dark btn-lg mr-2">Refresh Data</button>
               <a href="checkout.html"><button class="btn btn-outline-success btn-lg  mr-2">Buy</button></a>
-              <button class="btn btn-outline-primary btn-lg ">Sell</button>
+              <!-- <button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#sellModal">Sell</button> -->
+             
             </div>
             <div class="col-lg-2 col-sm-auto"></div>
           </div>
@@ -134,6 +136,67 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Nevermind</button>
                   <button type="button" class="btn btn-primary" id="logout">I'm sure.</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SELL MODAL DASHBOARD -->
+          <div class="modal fade" id="sellModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="sellModalTitle">Selling shares in Apple...</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                   
+                    <table class="table">
+                        
+                        <tbody>
+                          <tr>
+                            <th scope="row">Current cash</th>
+                            <td id="currentCashSellField">$10,000</td>
+                            
+                          </tr>
+                          <tr>
+                            <th scope="row">Shares to sell</th>
+                            <td id="totalSharesWantingToSell">0</td>
+                            
+                          </tr>
+                          <tr>
+                            <th scope="row">Total Sell Price</th>
+                            <td id="totalShareSellPrice">$0</td>
+                            
+                          </tr>
+                          <tr>
+                            <th scope="row">Cash after selling</th>
+                            <td id="totalCashAfterSell">$10,000</td>
+                            
+                          </tr>
+                        </tbody>
+                      </table>  
+                      <div class="alert alert-danger" role="alert" id="overSellWarningMessage">
+                        Total is greater than your current shares!
+                      </div>
+                      <div class="alert alert-success" role="alert" id="successSellMessage">
+                        
+                      </div>
+                     
+                        How many shares would you like to sell?
+                        <br>
+                        <span id="numSharesCurrentlyHave"></span>
+                    
+                  <form class="form-inline">
+                    <label for="quantity"></label>
+                    <input type="number" id="numSharesSellField" class="mt-3 form-control input-lg w-50" name="quantity" min="1" max="200">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-success" id="finalSharesSellButton">Sell</button>
                 </div>
               </div>
             </div>

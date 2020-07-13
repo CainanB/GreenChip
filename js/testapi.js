@@ -21,6 +21,7 @@ class User{
         this.currentNetWorth = [currentNetWorth];
         this.holdings = holdings;
         this.currentStockAwaitingPurchase = {};
+        this.currentStockAwaitingSell = {};
         
     }
     addStockToPurchaseList(name, symbol){
@@ -62,6 +63,25 @@ class User{
         }
         this.saveUser();
         
+    }
+    async sellStock(symbol, numSharesToSell, latestPrice){
+        console.log(this.cash);
+        let totalSellPrice = parseFloat(numSharesToSell).toFixed(2) * parseFloat(latestPrice).toFixed(2)
+        console.log(totalSellPrice);
+        for(let comp of this.holdings){
+            if(comp.symbol == symbol){
+                comp.totalShares -= numSharesToSell
+                console.log(comp.totalShares);
+                
+            }
+        }
+        this.holdings = this.holdings.filter(comp => comp.totalShares > 0)
+        console.log(this.holdings);
+        this.cash += totalSellPrice;
+        console.log(this.cash);
+        this.saveUser();
+        await this.getData();
+        createLineGraph();
     }
     async getStockData(stockSymbol){
         let response = await fetch(`https://cloud.iexapis.com/stable/stock/${stockSymbol}/quote/?token=${APIurls[2]}`)
@@ -114,6 +134,7 @@ class User{
         </tr>
         `)
        let totalPortfolioValue = this.cash;
+       console.log(this.cash);
        
        Promise.all(this.holdings.map( comp => {
            return fetch(`https://cloud.iexapis.com/stable/stock/${comp.symbol}/quote/?token=${APIurls[2]}`).then(resp => resp.json())
@@ -122,7 +143,7 @@ class User{
         results.forEach((comp, index)=>{
             
             let currentCompInHoldings = this.holdings[index];
-            
+            if(currentCompInHoldings.totalShares > 0){
                 $('#totalPortfolioValue').html(`
                 Portfolio Value: $${(totalPortfolioValue += (comp.latestPrice * currentCompInHoldings.totalShares)).toFixed(2)}
             `)
@@ -133,9 +154,13 @@ class User{
             <td>${Number(currentCompInHoldings.totalShares)}</td>
             <td>$${Number(comp.latestPrice).toFixed(2)}</td>
             <td>$${(Number(comp.latestPrice) * Number(currentCompInHoldings.totalShares)).toFixed(2)}</td>
+            <td><button id="${currentCompInHoldings.symbol}"class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#sellModal">Sell</button></td>
           </tr>
             `)
            
+            }
+            
+             
         } )
        })
 
@@ -204,7 +229,7 @@ $("#nameList").click(function(e){
     
 
 })
-
+// BUYING FUNCTIONS
 $("#checkoutBuyButton").click(function(e){
     let notAbleToBuy = $("#overPurchaseWarningMessage").is(":visible");
     if(notAbleToBuy){
@@ -239,8 +264,88 @@ $("#numSharesToPurchaseField").keyup(function(e){
 
 })
 
+// SELLING FUNCTIONS
+
 $("#goHome").click(function(e){
     window.location.href = "dashboard.html";
+})
+
+$("#tbody").click(async function(e){
+    var currentHolding;
+    let clickedDataTarget = e.target.getAttribute("data-target");
+   
+    if(clickedDataTarget == "#sellModal"){
+        $("#currentCashSellField").html(`$${currentUser.cash.toFixed(2)}`)
+        let currentCompSymbolToSell = e.target.id;
+        let currentStockPrice = await currentUser.getStockLatestPrice(currentCompSymbolToSell);
+        for(let comp of currentUser.holdings){
+            if(comp.symbol == currentCompSymbolToSell){
+                currentHolding = comp;
+                currentUser.currentStockAwaitingSell = {
+                    name : comp.name,
+                    symbol : comp.symbol,
+                    totalShares : comp.totalShares,
+                    latestPrice : currentStockPrice,
+                    totalSharesToSell : 0
+                
+                }
+            }
+        }
+        $("#totalCashAfterSell").html(`$${currentUser.cash.toFixed(2)}`)
+        $("#sellModalTitle").html(`Selling shares of ${currentHolding.name}<br> for $${currentStockPrice} a share`)
+        console.log(currentHolding);
+        $("#numSharesCurrentlyHave").html(`You currently own ${currentHolding.totalShares} share(s)`)
+        
+    }
+})
+
+$("#numSharesSellField").keyup(function(e){
+    let num = e.target.valueAsNumber;
+    console.log(num);
+   
+        let numSharesToSell = parseInt($("#numSharesSellField").val());
+        currentUser.currentStockAwaitingSell.totalSharesToSell = numSharesToSell;
+        let latestPrice = parseFloat(currentUser.currentStockAwaitingSell.latestPrice).toFixed(2);
+        let currentTotalShares = currentUser.currentStockAwaitingSell.totalShares;
+        let total = parseFloat(latestPrice) * parseFloat(numSharesToSell).toFixed(2);
+        if(isNaN(numSharesToSell)){
+            numSharesToSell = 0;
+            total = 0;
+        }
+        let cashAfterSell = parseFloat(currentUser.cash + total).toFixed(2);
+        if(numSharesToSell > currentTotalShares){
+            $("#overSellWarningMessage").show();
+        }else{
+            $("#overSellWarningMessage").hide();
+        }
+        
+        $("#totalSharesWantingToSell").html(`${numSharesToSell} X ${latestPrice}`);
+        $("#totalShareSellPrice").html(`$${total}`)
+        $("#totalCashAfterSell").html(`$${cashAfterSell}`)
+    
+   
+})
+
+$("#finalSharesSellButton").click(function(e){
+    let notAbleToSell = $("#overSellWarningMessage").is(":visible");
+    if(notAbleToSell){
+        return
+    }else{
+        
+        let stockName = currentUser.currentStockAwaitingSell.name;
+        let stockSymbol = currentUser.currentStockAwaitingSell.symbol;
+        
+        let sharesToSell = currentUser.currentStockAwaitingSell.totalSharesToSell;
+        currentUser.currentStockAwaitingSell.totalSharesToSell -= sharesToSell;
+        
+        $("#successSellMessage").html(`You sold ${sharesToSell} shares of ${stockName}!`)
+        $("#successSellMessage").show();
+        $("#numSharesCurrentlyHave").html(`You currently own ${currentUser.currentStockAwaitingSell.totalSharesToSell} share(s)`)
+    //    currentUser.buyStock(stockName, stockSymbol, sharesToBuy, currentUser.getStockLatestPrice)
+        currentUser.sellStock(stockSymbol, sharesToSell, currentUser.currentStockAwaitingSell.latestPrice);
+        console.log(currentUser.currentStockAwaitingSell.latestPrice);
+    }
+
 })
 
 
