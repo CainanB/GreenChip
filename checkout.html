@@ -20,6 +20,7 @@
   crossorigin="anonymous"></script>
     <script src="js/testapi.js" type="module"></script>
     <script src="js/checkout.js" type="module"></script>
+    <script src="js/newsAPI.js" type="module"></script>
     
   </head>
   <body>
@@ -238,19 +239,25 @@
       </div>
 
 
-          <!--start of news section on the bottom-->
+          <!--start of news section
+              HIDE until a nameList item is clicked and then
+              populate with 3 articles relevant to the item clicked
+              then SHOW
+          -->
 
           <div class="row mt-5 mb-5 ml-5 mr-5 pr-0" style="color:black;height:400px;">
 
             <div id="article1" class="col  d-flex justify-content-center" style="border:solid 1px black;padding-left: 0px;">
               Article Preview 1
             </div>
-            <div id="article2" class="col  d-flex justify-content-center" style="border:solid 1px black;padding-left: 0px;">
+            <div id="article2" class="col  ml-1 mr-1 d-flex justify-content-center" style="border:solid 1px black;padding-left: 0px;">
               Article Preview 2
             </div>
             <div id="article3" class="col  d-flex justify-content-center" style="border:solid 1px black;padding-left: 0px;">
               Article Preview 3
             </div>
+
+          </div>
 
     </div> <!--end container fluid-->
 
