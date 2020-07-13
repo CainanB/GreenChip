@@ -1,5 +1,7 @@
 import {APIurls} from "./apikeys.js"
 $(()=>{
+
+
     
 // HOLDING CLASS TO CREATE INSTANCES WHEN STOCK IS PURCHASED
 class Holding {
