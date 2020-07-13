@@ -119,7 +119,7 @@ $(()=>{
                     .then((cred)=>{
                         localStorage.setItem("currentUser",id);
                         console.log(cred)
-                        // window.location.href = "./dashboard.html"
+                        window.location.href = "./dashboard.html"
                 }).catch(function(e) {
                     // console.log(e.message)
                     $('#error')[0].innerHTML = e.message
