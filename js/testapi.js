@@ -1,5 +1,7 @@
 import {APIurls, firebaseAPIkey} from "./apikeys.js"
 $(()=>{
+
+
     
 firebase.initializeApp({
         apiKey: firebaseAPIkey,

@@ -34,7 +34,7 @@ li:hover{
 }
 
 #navLi:hover{
-    background-color: white;
+    background-color: #f7f7f7;
     color:blue;
 }
 
@@ -49,6 +49,12 @@ li:hover{
 
 .col{
     padding-right:0px;
+}
+
+.col-1{
+    padding-left: 0px;
+    padding-right: 0px;
+
 }
 
 .container-fluid{
@@ -107,7 +113,7 @@ body{
 }
 
 #parallax-image{
-    background-image: url("/images/parallax.jpg");
+    background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
     height:600px;
     background-attachment: fixed;
@@ -116,7 +122,7 @@ body{
 }
 
 #parallax-image2{
-    background-image: url("/images/parallax.jpg");
+    background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
     height:400px;
     background-attachment: fixed;
@@ -124,7 +130,7 @@ body{
     background-position-y:100px;
 }
 #parallax-image3{
-    background-image: url("/images/shellSE.jpg");
+    background-image: url("../images/shellSE.jpg");
     background-size: cover;
     height:400px;
     background-attachment: fixed;
@@ -132,7 +138,7 @@ body{
 }
 
 #parallax-image4{
-    background-image: url("/images/shellSE2.jpg");
+    background-image: url("../images/shellSE2.jpg");
     background-size: cover;
     height:400px;
     background-attachment: fixed;
@@ -156,3 +162,11 @@ body{
 #successPurchaseMessage{
     display: none;
 }
+
+canvas{
+    width:100%;
+    height:auto;
+}
+
+
+
