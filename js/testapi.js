@@ -1,6 +1,15 @@
-import {APIurls} from "./apikeys.js"
+import {APIurls, firebaseAPIkey} from "./apikeys.js"
 $(()=>{
     
+firebase.initializeApp({
+        apiKey: firebaseAPIkey,
+        authDomain: "stock-market-playground.firebaseapp.com",
+        projectId: "stock-market-playground"
+    });
+
+const db = firebase.firestore();
+
+
 // HOLDING CLASS TO CREATE INSTANCES WHEN STOCK IS PURCHASED
 class Holding {
     
@@ -32,7 +41,11 @@ class User{
     }
     saveUser(){
         localStorage.setItem(`${this.userName}`, JSON.stringify(this))
+        db.collection("users").doc(`${this.userName}`).set({
+            info: JSON.stringify(this)
+        }).then(console.log("saved to database"))
     }
+
     createNewHolding(name, symbol, numShares){
         let found = false;
         for(let comp of this.holdings){
@@ -178,7 +191,9 @@ currentUser.getData()
 
 
 $("#refreshButton").click(function(e){
+    currentUser.saveUser();
     currentUser.getData();
+
  })
 
 
