@@ -163,6 +163,9 @@ body{
 #successPurchaseMessage{
     display: none;
 }
+#overSellWarningMessage, #successSellMessage{
+    display: none;
+}
 
 canvas{
     width:100%;
