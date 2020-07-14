@@ -232,13 +232,14 @@ $("#checkoutBuyButton").click(function(e){
         let sharesToBuy = Number($("#numSharesToPurchaseField").val());
         $("#successPurchaseMessage").html(`You purchased ${sharesToBuy} shares of ${stockName}!`)
         $("#successPurchaseMessage").show();
+        $("#checkoutBuyButton").hide();
        currentUser.buyStock(stockName, stockSymbol, sharesToBuy, currentUser.getStockLatestPrice)
     }
 
 })
 
 $("#numSharesToPurchaseField").keyup(function(e){
-    
+    $('#checkoutBuyButton').show();
     let numSharesToPurchase = Number($("#numSharesToPurchaseField").val()).toFixed(0);
     let latestPrice = Number($("#exampleModalCenterTitle2 span").html()).toFixed(2);
     let total = Number(numSharesToPurchase) * Number(latestPrice);
