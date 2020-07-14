@@ -39,11 +39,11 @@ class User{
     constructor(userName, cash,currentNetWorth, holdings = []){
         this.userName = userName;
         this.cash = cash;
-        this.currentNetWorth = [currentNetWorth];
+        this.currentNetWorth = currentNetWorth;
         this.holdings = holdings;
         this.currentStockAwaitingPurchase = {};
         this.currentStockAwaitingSell = {};
-        
+        this.tick = ["|"]
     }
     addStockToPurchaseList(name, symbol){
         this.currentStockAwaitingPurchase = {
@@ -112,6 +112,54 @@ class User{
         let response = await fetch(`https://cloud.iexapis.com/stable/stock/${stockSymbol}/quote/?token=${APIurls[2]}`)
         let json = await response.json();
         return json;
+    }
+    updateChartPrices = () =>{
+        let totalPortfolioValue = this.cash;
+        console.log(this);
+        if(this.holdings.length == 0){
+         $('#totalPortfolioValue').html(`
+         Portfolio Value: $${totalPortfolioValue.toFixed(2)}
+     `)
+        }
+        Promise.all(this.holdings.map( comp => {
+            return fetch(`https://cloud.iexapis.com/stable/stock/${comp.symbol}/quote/?token=${APIurls[2]}`).then(resp => resp.json())
+        })).then(results => {
+         //    console.log(results);
+         results.forEach((comp, index)=>{
+             console.log(comp);
+             let currentCompInHoldings = this.holdings[index];
+             if(currentCompInHoldings.totalShares > 0){
+                 $('#totalPortfolioValue').html(`
+                 Portfolio Value: $${(totalPortfolioValue += (comp.latestPrice * currentCompInHoldings.totalShares)).toFixed(2)}
+             `)
+             console.log(totalPortfolioValue);
+             $(`.stockData#${comp.symbol}Data`).html(`${parseFloat(comp.latestPrice).toFixed(2)}`)
+             $(`#${comp.symbol}Total`).html(`${parseFloat(comp.latestPrice * currentCompInHoldings.totalShares).toFixed(2)}`)
+        //      $("#tbody").append(`
+        //      <tr>
+             
+        //      <td>${currentCompInHoldings.name} (${currentCompInHoldings.symbol})</td>
+        //      <td>${Number(currentCompInHoldings.totalShares)}</td>
+        //      <td class="stockData" id="${currentCompInHoldings.symbol}">$${Number(comp.latestPrice).toFixed(2)}</td>
+        //      <td>$${(Number(comp.latestPrice) * Number(currentCompInHoldings.totalShares)).toFixed(2)}</td>
+        //      <td><button id="${currentCompInHoldings.symbol}"class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#sellModal">Sell</button></td>
+        //    </tr>
+        //      `)
+            
+             }
+             
+              
+         } )
+        //this.currentNetWorth.shift();
+         //this.currentNetWorth.push(totalPortfolioValue.toFixed(2));
+         if(Array.isArray(this.currentNetWorth[0])){
+             this.currentNetWorth.shift();
+         }
+         this.tick.push("|")
+         this.currentNetWorth.push(totalPortfolioValue.toFixed(2));
+         console.log(this.currentNetWorth);
+         createLineGraph();
+        })
     }
     async getStockLatestPrice(stockSymbol){
         let response = await fetch(`https://cloud.iexapis.com/stable/stock/${stockSymbol}/quote/?token=${APIurls[2]}`)
@@ -183,8 +231,8 @@ class User{
             
             <td>${currentCompInHoldings.name} (${currentCompInHoldings.symbol})</td>
             <td>${Number(currentCompInHoldings.totalShares)}</td>
-            <td>$${Number(comp.latestPrice).toFixed(2)}</td>
-            <td>$${(Number(comp.latestPrice) * Number(currentCompInHoldings.totalShares)).toFixed(2)}</td>
+            <td class="stockData" id="${currentCompInHoldings.symbol}Data">$${Number(comp.latestPrice).toFixed(2)}</td>
+            <td id="${currentCompInHoldings.symbol}Total">$${(Number(comp.latestPrice) * Number(currentCompInHoldings.totalShares)).toFixed(2)}</td>
             <td><button id="${currentCompInHoldings.symbol}"class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#sellModal">Sell</button></td>
           </tr>
             `)
@@ -234,8 +282,11 @@ console.log(currentUser);
 
 (async()=>{
 await currentUser.getData()
+//console.log(document.querySelectorAll(".stockData#AAPL")); 
+
 })()
 
+setInterval(currentUser.updateChartPrices,5000)
 
 
 $("#refreshButton").click(function(e){
@@ -419,12 +470,12 @@ async function createLineGraph(){
 
     // The data for our dataset
     data: {
-        labels: ['Day 1', 'Today'],
+        labels: ['Day 1', ...currentUser.tick],
         datasets: [{
             label: 'Portfolio Value',
             backgroundColor: 'blue',
             borderColor: 'blue',
-            data: [10000, totalPortfolioValue],
+            data: [10000, ...currentUser.currentNetWorth],
             fill: false
         }]
     },
