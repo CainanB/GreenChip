@@ -12,18 +12,18 @@
 <h2><u>The Team:</u></h2>
 
 <h3>Cainan Barboza</h3>
-<b>Primary team role:</b> Back-end organization, API calls, functionality, and data structuring.
+<b>Primary team role:</b> Back-end organization, API calls, functionality, and data structuring. <br> https://github.com/CainanB
 </br>
 
 <h3>Micah Peterson</h3>
-<b>Primary team role:</b> HTML and CSS styling, UI development, and functionality.
+<b>Primary team role:</b> HTML and CSS styling, UI development, and functionality.<br> https://github.com/petersonprojects
 </br>
 
 <h3>Dan Gelok</h3>
-<b>Primary team role:</b> Project Management, API calls, and Authentication.
+<b>Primary team role:</b> Project Management, API calls, and Authentication.<br> https://github.com/dgelok
 
 <h3>RJ Eppenger</h3>
-<b>Primary team role:</b> Data Visualization and HTML/CSS styling.
+<b>Primary team role:</b> Data Visualization and HTML/CSS styling.<br> https://github.com/RjEppenger
 
 </br>
 </br>
