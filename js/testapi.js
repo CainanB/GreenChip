@@ -363,6 +363,7 @@ $("#finalSharesSellButton").click(function(e){
         
         $("#successSellMessage").html(`You sold ${sharesToSell} shares of ${stockName}!`)
         $("#successSellMessage").show();
+        $('#finalSharesSellButton').hide();
         $("#numSharesCurrentlyHave").html(`You currently own ${currentUser.currentStockAwaitingSell.totalSharesToSell} share(s)`)
     //    currentUser.buyStock(stockName, stockSymbol, sharesToBuy, currentUser.getStockLatestPrice)
         currentUser.sellStock(stockSymbol, sharesToSell, currentUser.currentStockAwaitingSell.latestPrice);
