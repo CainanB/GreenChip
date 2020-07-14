@@ -11,7 +11,7 @@
 
 <h2><u>The Team:</u></h2>
 
-<h3>Cainan Barbozza</h3>
+<h3>Cainan Barboza</h3>
 <b>Primary team role:</b> Back-end organization, API calls, functionality, and data structuring.
 </br>
 
@@ -128,11 +128,11 @@ Other:
 </br>
 
 <h2>Screenshots:</h2>
-<img src="images/loginPage.png" >
+<img src="images/loginPage.png">
 <h4>Login and user registration.</h4>
 <br />
-<img src="images/graphs.png" >
+<img src="images/graphs.png">
 <h4>Live-updated graphs of a player's current portfolio.</h4>
 <br />
-<img src="images/checkoutPage.png" >
+<img src="images/checkoutPage.png">
 <h4>Drop-down menu providing an easy search for stocks to buy or sell.</h4>
