@@ -159,8 +159,13 @@ class User{
         </tr>
         `)
        let totalPortfolioValue = this.cash;
+       if(this.holdings.length == 0){
+        $('#totalPortfolioValue').html(`
+        Portfolio Value: $${totalPortfolioValue.toFixed(2)}
+    `)
+       }
        console.log(this.cash);
-       
+       console.log(this.holdings);
        Promise.all(this.holdings.map( comp => {
            return fetch(`https://cloud.iexapis.com/stable/stock/${comp.symbol}/quote/?token=${APIurls[2]}`).then(resp => resp.json())
        })).then(results => {
@@ -172,6 +177,7 @@ class User{
                 $('#totalPortfolioValue').html(`
                 Portfolio Value: $${(totalPortfolioValue += (comp.latestPrice * currentCompInHoldings.totalShares)).toFixed(2)}
             `)
+            console.log(totalPortfolioValue);
             $("#tbody").append(`
             <tr>
             
@@ -224,7 +230,12 @@ function getUser(userName){
 }
 
 let currentUser = createNewUser(localStorage.currentUser);
-currentUser.getData()
+console.log(currentUser);
+
+(async()=>{
+await currentUser.getData()
+})()
+
 
 
 $("#refreshButton").click(function(e){
@@ -333,7 +344,6 @@ $("#tbody").click(async function(e){
     }
 })
 
-
 $("#numSharesSellField").keyup(sellKeyUpAndClick)
 $("#numSharesSellField").click(sellKeyUpAndClick)
 
@@ -346,7 +356,7 @@ function sellKeyUpAndClick(){
     currentUser.currentStockAwaitingSell.totalSharesToSell = numSharesToSell;
     let latestPrice = parseFloat(currentUser.currentStockAwaitingSell.latestPrice).toFixed(2);
     let currentTotalShares = currentUser.currentStockAwaitingSell.totalShares;
-    let total = parseFloat(latestPrice) * parseFloat(numSharesToSell).toFixed(2);
+    let total = parseFloat(latestPrice).toFixed(2) * parseFloat(numSharesToSell).toFixed(2);
     if(isNaN(numSharesToSell)){
         numSharesToSell = 0;
         total = 0;
@@ -357,10 +367,9 @@ function sellKeyUpAndClick(){
     }else{
         $("#overSellWarningMessage").hide();
     }
-
     
     $("#totalSharesWantingToSell").html(`${numSharesToSell} X ${latestPrice}`);
-    $("#totalShareSellPrice").html(`$${total}`)
+    $("#totalShareSellPrice").html(`$${total.toFixed(2)}`)
     $("#totalCashAfterSell").html(`$${cashAfterSell}`)
 }
 
