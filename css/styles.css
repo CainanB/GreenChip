@@ -129,6 +129,7 @@ body{
     background-position-x: -1900px;
     background-position-y:100px;
 }
+
 #parallax-image3{
     background-image: url("../images/shellSE.jpg");
     background-size: cover;
