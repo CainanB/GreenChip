@@ -116,7 +116,7 @@ body{
 #parallax-image2{
     background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
-    height:300px;
+    height:400px;
     background-attachment: fixed;
     background-position-x: -1800px;
     background-position-y: 50px;

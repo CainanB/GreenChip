@@ -4,8 +4,8 @@ import {firebaseAPIkey, newsAPIkey, iexCloudAPIkey} from './apikeys.js'
 // console.log(firebaseAPIkey)
 
 $(()=>{
-    
-    $('#newsList')[0].style.display = 'none'
+    console.log(newsAPIkey)
+    //$('#newsList')[0].style.display = 'none'
     // News API search
     var $searchSubmit = $('#nameList')
     $searchSubmit.click(function(e) {
