@@ -1,8 +1,8 @@
-# TomatoTeam Project
+# Team Cannon Project
 
-<h1>AlcoholFinder<h1>
+<h1>GreenChip<h1>
 
-<!-- <img src="images/ScreenShotHome.png"> -->
+<img src="images/graphs.png">
 
 <h2><u>Overview:</u><h2>
 <h4>GreenChip is a real-time stock market game, where players can play the real stock market using virtual currency. Players are given $10,000 to invest, and they are able to buy, sell, hold, and invest their funds in any way they choose. Graphs help to show a portfolio's diversification and the trajectory of growth (or losses!) over time.</h4>
