@@ -35,6 +35,7 @@ function createCompanyData(compArr){
 
   $('#searchField').keyup(function () {
     $("#nameList").html("");
+    $('#nameList').show();
     $("#companyDataContainer").html("");
     let input = document.getElementById('searchField');
     let patt = new RegExp(`^${input.value.toUpperCase()}`);
