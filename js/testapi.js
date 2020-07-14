@@ -10,6 +10,17 @@ firebase.initializeApp({
     });
 
 const db = firebase.firestore();
+const auth = firebase.auth();
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log(`user logged in: ${user.email}`)
+        // console.log(user)
+    }
+    else {
+        console.log('user logged out')
+        window.location.href = "./index.html"
+    }
+})
 
 // HOLDING CLASS TO CREATE INSTANCES WHEN STOCK IS PURCHASED
 class Holding {
@@ -377,7 +388,6 @@ $("#finalSharesSellButton").click(function(e){
 })
 
 
-const auth = firebase.auth()
 $('#logout').click((e) =>{
     e.preventDefault();
     auth.signOut()
