@@ -7,16 +7,19 @@ $(()=>{
     
     
     // News API search
-
-    var $searchSubmit = $('#searchSubmit')
-    $searchSubmit.click(function() {
-        var $searchContent = $('#searchContent')[0].value
+    var $searchSubmit = $('#nameList')
+    $searchSubmit.click(function(e) {
+        console.log(e.target.id)
+        var $searchContent = e.target.id
         var url = `https://newsapi.org/v2/everything?q=${$searchContent}&sortBy=relevancy&apiKey=${newsAPIkey}`
         $.get(url)
         .done(function (response) {
             // console.log(response.articles)
-            for (let i = 0; i < response.articles.length; i++) {
-                console.log(response.articles[i].title)
+            for (let i = 0; i < 3; i++) {
+                // console.log(response.articles[i].title)
+                let articleList = [$('#article1'),$('#article2'),$('#article3')]
+                // console.log(articleList[i][0].innerText)
+                articleList[i][0].innerText = response.articles[i].title
             }
         })
     })
