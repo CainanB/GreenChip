@@ -319,7 +319,7 @@ $("#tbody").click(async function(e){
 $("#numSharesSellField").keyup(function(e){
     let num = e.target.valueAsNumber;
     console.log(num);
-   
+        $('#finalSharesSellButton').show();
         let numSharesToSell = parseInt($("#numSharesSellField").val());
         currentUser.currentStockAwaitingSell.totalSharesToSell = numSharesToSell;
         let latestPrice = parseFloat(currentUser.currentStockAwaitingSell.latestPrice).toFixed(2);
@@ -332,7 +332,8 @@ $("#numSharesSellField").keyup(function(e){
         let cashAfterSell = parseFloat(currentUser.cash + total).toFixed(2);
         if(numSharesToSell > currentTotalShares){
             $("#overSellWarningMessage").show();
-        }else{
+        }
+        else{
             $("#overSellWarningMessage").hide();
         }
         
@@ -357,6 +358,7 @@ $("#finalSharesSellButton").click(function(e){
         
         $("#successSellMessage").html(`You sold ${sharesToSell} shares of ${stockName}!`)
         $("#successSellMessage").show();
+        $('#finalSharesSellButton').hide();
         $("#numSharesCurrentlyHave").html(`You currently own ${currentUser.currentStockAwaitingSell.totalSharesToSell} share(s)`)
     //    currentUser.buyStock(stockName, stockSymbol, sharesToBuy, currentUser.getStockLatestPrice)
         currentUser.sellStock(stockSymbol, sharesToSell, currentUser.currentStockAwaitingSell.latestPrice);
