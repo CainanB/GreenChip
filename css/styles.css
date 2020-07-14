@@ -10,12 +10,6 @@ img{
 #piechart{
     width: 100%;
     height: auto;
-    
-}
-
-#piechart > * > first-child{
-    width:auto;
-    height:auto;
 }
 
 ul{
@@ -71,11 +65,10 @@ li:hover{
 }
 
 #signin:hover{
-    color:black;
     border:black solid 1px;
 }
+
 #getStarted:hover{
-    color:black;
     border:black solid 1px;
 }
 
@@ -114,19 +107,19 @@ body{
 #parallax-image{
     background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
-    height:600px;
+    height:400px;
     background-attachment: fixed;
     background-position-x: -1000px;
-    background-position-y: -1200px;
+    background-position-y: -1500px;
 }
 
 #parallax-image2{
     background-image: url("../images/parallax.jpg");
     background-repeat: no-repeat;
-    height:400px;
+    height:300px;
     background-attachment: fixed;
-    background-position-x: -1900px;
-    background-position-y:100px;
+    background-position-x: -1800px;
+    background-position-y: 50px;
 }
 
 #parallax-image3{
@@ -134,7 +127,7 @@ body{
     background-size: cover;
     height:400px;
     background-attachment: fixed;
-    background-position-y:-300px;
+    background-position-y:-100px;
 }
 
 #parallax-image4{
@@ -152,6 +145,7 @@ body{
 #nameList li{
     cursor: pointer;
 }
+
 #overPurchaseWarningMessage{
     display: none;
 }
@@ -159,6 +153,7 @@ body{
 #checkoutTable{
     display: none;
 }
+
 #successPurchaseMessage{
     display: none;
 }
