@@ -44,6 +44,7 @@ Other:
     <li>JSON</li>
     <li>Bootstrap</li>
     <li>FontAwesome</li>
+    <li>ChartJS</li>
 </ul>
 
 <h3>APIs</h3>
@@ -51,6 +52,7 @@ Other:
     <li>Firebase and Firestore (Authentication and Database) - https://firebase.google.com/</li>
     <li>News API (news API) - https://newsapi.org/</li>
     <li>IEX Cloud (real-time stock info) - https://www.iexcloud.io/</li>
+    <li>IEX Cloud (stock ticker symbol info) - https://www.iexcloud.io/</li>
 </ul
 
 </br>
@@ -68,16 +70,18 @@ Other:
 
 <h2><u>Flex Goals Completed:</u></h2>
 <ul>
-    <li>Provide university login from anywhere </li>
+    <li>Provide universal login from anywhere </li>
     <li>Smoothen out navigation for natural UI experience </li>
-   
 </ul>
+
+</br>
 
 <h2><u>Stretch Goals Future</u></h2>
 <ul>
     <li>Provide percentage growth/loss for individual stock holding</li>
     <li>Provide individual growth/loss tracking graphs for unique holdings</li>
-    <li>Allow for competitivve play against friends</li>
+    <li>Allow for competitive play against friends</li>
+    <li>Provide purchasable icons and UI upgrades available for purchase (with in-game virtual earnings)</li>
 </ul>
 
 </br>
@@ -95,33 +99,181 @@ Other:
 
 <b>Challenge: Functional Complexity</b>
 <br>
-<b>Solution: refactoring to allow portfolios using OOP techniques made the program significantly more efficient and streamlined remaining development for ease of use.</b>
+<b>Solution: Refactoring to allow portfolios using OOP techniques made the program significantly more efficient and streamlined remaining development for ease of use.</b>
+
+<b>Challenge: CSS Manipulation of Components</b>
+<br>
+<b>Solution: Significant under-the-hood work on pre-existing components provided a much more visually pleasing end product on charts and graphs.</b>
 
 </br>
 
 <h2><u>Code Snippets:</u></h2>
 
-<h4>This snippet showcases ???</h4>
+<h4>This snippet showcases the declaration of our user Class (including methods and attributes), and demonstrates OOP concepts.</h4>
 
 ```
-????
+class User{
+    constructor(userName, cash,currentNetWorth, holdings = []){
+        this.userName = userName;
+        this.cash = cash;
+        this.currentNetWorth = [currentNetWorth];
+        this.holdings = holdings;
+        this.currentStockAwaitingPurchase = {};
+        this.currentStockAwaitingSell = {};
+    }
+
+    addStockToPurchaseList(name, symbol){
+        this.currentStockAwaitingPurchase = {
+            name : name,
+            symbol : symbol,
+        }
+    }
+
+    saveUser(){
+        localStorage.setItem(`${this.userName}`, JSON.stringify(this))
+        db.collection("users").doc(`${this.userName}`).set({
+            info: JSON.stringify(this)
+        }).then(console.log("saved to database"))
+    }
+
+    createNewHolding(name, symbol, numShares){
+        let found = false;
+        for(let comp of this.holdings){
+            if(symbol == comp.symbol){
+                comp.totalShares += numShares
+                console.log(comp.totalShares);
+                found = true;
+            }
+        }
+        if(found == false){
+            let newHolding = new Holding(name,symbol,numShares)
+            console.log(newHolding.totalShares);
+            this.holdings.push(newHolding)
+        }
+    }
+
+    async buyStock(name, symbol, numShares, latestPrice){
+        let stockPrice = await latestPrice(symbol)
+        console.log(typeof this.cash,typeof numShares, typeof stockPrice)
+        if(this.cash >= numShares * stockPrice){
+            console.log("Cash is enough to buy");
+            console.log(this.cash);
+            this.createNewHolding(name, symbol, numShares)
+            
+            this.cash = this.cash - (numShares * stockPrice)
+            console.log(this.cash);
+        }
+        this.saveUser();
+    }
+
+    async sellStock(symbol, numSharesToSell, latestPrice){
+        console.log(this.cash);
+        let totalSellPrice = parseFloat(numSharesToSell).toFixed(2) * parseFloat(latestPrice).toFixed(2)
+        console.log(totalSellPrice);
+        for(let comp of this.holdings){
+            if(comp.symbol == symbol){
+                comp.totalShares -= numSharesToSell
+                console.log(comp.totalShares);
+            }
+        }
+        this.holdings = this.holdings.filter(comp => comp.totalShares > 0)
+        console.log(this.holdings);
+        this.cash += totalSellPrice;
+        console.log(this.cash);
+        this.saveUser();
+        await this.getData();
+        createLineGraph();
+    }
+
+    async getStockData(stockSymbol){
+        let response = await fetch(`https://cloud.iexapis.com/stable/stock/${stockSymbol}/quote/?token=${APIurls[2]}`)
+        let json = await response.json();
+        return json;
+    }
+
+    async getStockLatestPrice(stockSymbol){
+        let response = await fetch(`https://cloud.iexapis.com/stable/stock/${stockSymbol}/quote/?token=${APIurls[2]}`)
+            let json = await response.json();
+            console.log(json)
+            let currentPrice = json.latestPrice;
+            console.log(currentPrice);
+            return currentPrice;
+    }
+
+    async getPortfolioData(){
+        return Promise.all(this.holdings.map( comp => {
+            return fetch(`https://cloud.iexapis.com/stable/stock/${comp.symbol}/quote/?token=${APIurls[2]}`).then(resp => resp.json())
+        })).then(results => {
+            let total = 0;
+            let companyArray = []
+            results.forEach((comp, index)=>{
+            
+            let currentCompInHoldings = this.holdings[index];
+            let latestPrice = parseFloat(comp.latestPrice); 
+            let totalSharesOfComp =  parseInt(currentCompInHoldings.totalShares);  
+            total += (latestPrice * totalSharesOfComp);
+            companyArray.push({
+                name : currentCompInHoldings.name,
+                totalSharesValue : (latestPrice * totalSharesOfComp)
+            })
+        })
+        return {
+            totalPortfolioValue : total + this.cash,
+            companys : companyArray
+        }
+    })
+}
 
 ```
 
 <br/>
 
-<h4>This snippet shows ????</h4>
+<h4>The following code is part of the Firebase Authentication Protocol, and redirects users from 'inner' pages to the login page if they are not properly logged in.</h4>
 
 ```
-???
+const auth = firebase.auth();
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log(`user logged in: ${user.email}`)
+        // console.log(user)
+    }
+    else {
+        console.log('user logged out')
+        window.location.href = "./index.html"
+    }
+})
 
 ```
 
 <br />
-<h4>This snippet shows ???</h4>
+<h4>This excerpt, taken from the dashboard page, is a table populated from the user's portfolio object. It demonstrates bootstrap manipuation, HTML component development, and pure CSS styling, and is the main focal point displaying data in the user's dashboard.</h4>
 
 ```
-???
+<div class="row ml-1">
+
+    <div class="col-lg-2 col-sm-auto">
+    </div>
+
+    <div class="col" style="padding-right:15px;">
+    <table class="table table-success">
+        <thead class="table-dark">
+            <tr>
+            <th scope="col">Company (Ticker)</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            
+        </tbody>
+        </table>
+    </div>
+    <div class="col-lg-2 col-sm-auto mr-sm-1">
+    </div>
+
+</div>
 
 ```
 
