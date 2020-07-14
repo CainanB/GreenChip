@@ -251,6 +251,7 @@ $("#nameList").click(function(e){
     let stockData = await currentUser.getStockData(e.target.id);
     let currentShares = 0;
     $("#checkoutTable").show();
+    $('#nameList').hide();
     $("#companyNameAndSymbolCheckoutTable").html(`${stockData.companyName}(${stockData.symbol})`)
     $("#currentSharePrice").html(`${stockData.latestPrice}`)
     for(let comp of currentUser.holdings){
