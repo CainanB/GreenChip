@@ -1,14 +1,8 @@
 /* main styles page  */
 
-
-/*making the image responsive*/
+/*making the Green Chip image responsive*/
 img{
     max-width: 100%;
-    height: auto;
-}
-
-#piechart{
-    width: 100%;
     height: auto;
 }
 
@@ -47,7 +41,6 @@ li:hover{
 .col-1{
     padding-left: 0px;
     padding-right: 0px;
-
 }
 
 .container-fluid{
@@ -135,10 +128,6 @@ body{
     background-size: cover;
     height:400px;
     background-attachment: fixed;
-}
-
-#indexFooter{
-    font-size: 60px;
 }
 
 /* Changes cursor on checkout page dropdown search list */
