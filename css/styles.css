@@ -10,17 +10,10 @@ img{
 #piechart{
     width: 100%;
     height: auto;
-    
-}
-
-#piechart > * > first-child{
-    width:auto;
-    height:auto;
 }
 
 ul{
     list-style: none;
-
 }
 
 #line{
