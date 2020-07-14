@@ -327,7 +327,8 @@ $("#numSharesSellField").click(sellKeyUpAndClick)
 function sellKeyUpAndClick(){
      // let num = e.target.valueAsNumber;
     // console.log(num);
-   
+  
+   $('#finalSharesSellButton').show();
     let numSharesToSell = parseInt($("#numSharesSellField").val());
     currentUser.currentStockAwaitingSell.totalSharesToSell = numSharesToSell;
     let latestPrice = parseFloat(currentUser.currentStockAwaitingSell.latestPrice).toFixed(2);
