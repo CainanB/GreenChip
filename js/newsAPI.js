@@ -17,6 +17,8 @@ $(()=>{
             // console.log(response.articles)
             for (let i = 0; i < 3; i++) {
                 console.log(response.articles[i])
+                $('#newsList')[0].style.display = 'flex'
+
                 let articleList = [$('#article1'),$('#article2'),$('#article3')]
                 // console.log(articleList[i][0].innerText)
                 articleList[i][0].innerText = response.articles[i].title
